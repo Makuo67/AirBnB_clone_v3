@@ -86,14 +86,36 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
-
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
-    def test_get_existing_object(self):
-        """Test get() with an object that exists"""
-        obj = self.storage.get(City, self.new_city.id)
-        self.assertEqual(obj.id, self.new_city.id)
-
+    
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_count(self):
         """Test that count properly counts all objects"""
         self.assertEqual(len(models.storage.all()), models.storage.count())
+
+
+@unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') != 'db', "skip if  fs")
+class TestDBStorageGet(unittest.TestCase):
+    """Tests get method of the DBStorage class"""
+
+    def setUpClass(self):
+        """Set up for the tests"""
+
+        self.storage = DBStorage()
+        self.storage.reload()
+        self.new_state = State(name="California")
+        self.new_state.save()
+        self.new_city = City(name="San Francisco", state_id=self.new_state.id)
+        self.new_city.save()
+
+    def tearDownClass(self):
+        """Tear down after the tests"""
+
+        self.storage.delete(self.new_city)
+        self.storage.delete(self.new_state)
+        self.storage.save()
+        self.storage.close()
+
+    def test_get_existing_object(self):
+        """Test get() with an object that exists"""
+        obj = self.storage.get(City, self.new_city.id)
+        self.assertEqual(obj.id, self.new_city.id)
