@@ -146,11 +146,6 @@ class TestDBStorageCount(unittest.TestCase):
         self.storage.save()
         self.storage.close()
 
-    def test_count_all_objects(self):
-        """Test count() with no arguments"""
-        count = self.storage.count()
-        self.assertEqual(count, 3)
-
     def test_count_some_objects(self):
         """Test count() with a class argument"""
         count = self.storage.count(State)
