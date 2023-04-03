@@ -1,5 +1,11 @@
 #!/usr/bin/python3
-""" Init file for apit start """
+
+"""
+This script initializes the API and defines the app_views Blueprint.
+
+Usage: python3 app.py
+"""
+
 from flask import Blueprint
 
 app_views = Blueprint('app_views', __name__, url_prefix='/api/v1')
