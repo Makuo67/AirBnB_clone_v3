@@ -50,20 +50,22 @@ def get_cities_by_state(state_id=None):
 
 @app_views.route('/states/<state_id>/cities', methods=['POST'])
 def create_cities_by_state(state_id=None):
-    """Return cities by state"""
-
+    """Create new city"""
     state = storage.get(State, state_id)
-    if not state:
+    if state is None:
         abort(404)
 
-    if not request.is_json:
-        return jsonify({'error': "Not a JSON"}), 400
-
     data = request.get_json()
-    name = data.get('name', None)
-    if not name:
-        return jsonify({'error': 'Missing name'}), 400
+    if data is None:
+        abort(400, 'Not a JSON')
+
+    name = data.get('name')
+    if name is None:
+        abort(400, 'Missing name')
+
     data['state_id'] = state_id
     new_city = City(**data)
-    new_city.save()
+    storage.new(new_city)
+    storage.save()
+
     return jsonify(new_city.to_dict()), 201
