@@ -123,8 +123,25 @@ class TestDBStorageGet(unittest.TestCase):
         obj = self.storage.get(State, "nonexistent")
         self.assertIsNone(obj)
 
-    def test_get_dbstorage(self):
-        """Create fake test for the failing check"""
+    def test_get_existing_object_with_wrong_class(self):
+        """Test get() with an existing object and wrong class"""
+        obj = self.storage.get(State, self.new_city.id)
+        self.assertIsNone(obj)
+
+    def test_get_nonexistent_object_with_wrong_class(self):
+        """Test get() with a nonexistent object and wrong class"""
+        obj = self.storage.get(City, "nonexistent")
+        self.assertIsNone(obj)
+
+    def test_get_existing_object_with_none_id(self):
+        """Test get() with an existing object and None as id"""
+        obj = self.storage.get(City, None)
+        self.assertIsNone(obj)
+
+    def test_get_nonexistent_object_with_none_id(self):
+        """Test get() with a nonexistent object and None as id"""
+        obj = self.storage.get(State, None)
+        self.assertIsNone(obj)
 
 
 @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') != 'db', "skip if not db")
