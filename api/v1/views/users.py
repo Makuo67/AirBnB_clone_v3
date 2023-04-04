@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 """Users api"""
 
-
 from flask import Blueprint, jsonify, request, abort
 from app.models import User
 
@@ -10,12 +9,14 @@ users_bp = Blueprint('users', __name__, url_prefix='/api/v1/users')
 
 @users_bp.route('/', methods=['GET'])
 def get_users():
+    """Get users"""
     users = User.query.all()
     return jsonify([user.to_dict() for user in users])
 
 
 @users_bp.route('/<int:user_id>', methods=['GET'])
 def get_user(user_id):
+    """Get user id"""
     user = User.query.get(user_id)
     if user is None:
         abort(404)
@@ -24,6 +25,7 @@ def get_user(user_id):
 
 @users_bp.route('/', methods=['POST'])
 def create_user():
+    """create user"""
     data = request.get_json()
     if data is None:
         abort(400, 'Not a JSON')
@@ -38,6 +40,7 @@ def create_user():
 
 @users_bp.route('/<int:user_id>', methods=['PUT'])
 def update_user(user_id):
+    """Update user"""
     user = User.query.get(user_id)
     if user is None:
         abort(404)
@@ -54,6 +57,7 @@ def update_user(user_id):
 
 @users_bp.route('/<int:user_id>', methods=['DELETE'])
 def delete_user(user_id):
+    """delete user"""
     user = User.query.get(user_id)
     if user is None:
         abort(404)
