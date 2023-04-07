@@ -119,8 +119,8 @@ class TestDBStorageGet(unittest.TestCase):
 
     def test_get_existing_object(self):
         """Test get() with an object that exists"""
-        obj = self.storage.get(City, self.new_city.id)
-        self.assertEqual(obj.id, self.new_city.id)
+        obj = self.storage.get(State, self.new_state.id)
+        self.assertEqual(obj.id, self.new_state.id)
 
     def test_get_nonexistent_object(self):
         """Test get() with an object that does not exist"""
