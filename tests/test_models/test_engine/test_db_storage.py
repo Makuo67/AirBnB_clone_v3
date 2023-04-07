@@ -110,7 +110,6 @@ class TestDBStorageGet(unittest.TestCase):
     def tearDown(self):
         """Tear down after the tests"""
 
-        self.storage.delete(self.new_city)
         self.storage.delete(self.new_state)
         self.storage.save()
         self.storage.close()
