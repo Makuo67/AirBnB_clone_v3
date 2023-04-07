@@ -393,3 +393,138 @@ class TestDBStorageCountUser(unittest.TestCase):
         """Test count() with a nonexistent class argument for User class"""
         count = self.storage.count(Amenity)
         self.assertEqual(count, 0)
+class TestAmenity(TestBaseModel):
+    """ Test for amenity"""
+
+    def __init__(self, *args, **kwargs):
+        """ """
+        super().__init__(*args, **kwargs)
+        self.name = "Amenity"
+        self.value = Amenity
+
+    def test_name2(self):
+        """ """
+        new = self.value()
+        new.name = "amenity"
+        self.assertEqual(type(new.name), str)
+
+
+class TestPlace(TestBaseModel):
+    """ Test for place"""
+
+    def __init__(self, *args, **kwargs):
+        """ """
+        super().__init__(*args, **kwargs)
+        self.name = "Place"
+        self.value = Place
+
+    def test_city_id(self):
+        """ """
+        new = self.value()
+        city = City()
+        new.city_id = city.id
+        self.assertEqual(type(new.city_id), str)
+
+    def test_user_id(self):
+        """ """
+        new = self.value()
+        user = User()
+        new.user_id = user.id
+        self.assertEqual(type(new.user_id), str)
+
+    def test_name(self):
+        """ """
+        new = self.value()
+        new.name = "Place"
+        self.assertEqual(type(new.name), str)
+
+    def test_description(self):
+        """ """
+        new = self.value()
+        new.description = ""
+        self.assertEqual(type(new.description), str)
+
+    def test_number_rooms(self):
+        """ """
+        new = self.value()
+        new.number_rooms = 4
+        self.assertEqual(type(new.number_rooms), int)
+
+    def test_number_bathrooms(self):
+        """ """
+        new = self.value()
+        new.number_bathrooms = 2
+        self.assertEqual(type(new.number_bathrooms), int)
+
+    def test_max_guest(self):
+        """ """
+        new = self.value()
+        new.max_guest = 8
+        self.assertEqual(type(new.max_guest), int)
+
+    def test_price_by_night(self):
+        """ """
+        new = self.value()
+        new.price_by_night = 18
+        self.assertEqual(type(new.price_by_night), int)
+
+    def test_latitude(self):
+        """ """
+        new = self.value()
+        new.latitude = -123.085222
+        self.assertEqual(type(new.latitude), float)
+
+    def test_longitude(self):
+        """ """
+        new = self.value()
+        new.longitude = -120.085222
+        self.assertEqual(type(new.longitude), float)
+
+
+class TestUserFields(unittest.TestCase):
+    """Comment"""
+
+    def setUp(self):
+        """Comment"""
+        self.user = User()
+
+    def test_random_email_1(self):
+        """Comment"""
+        self.user.email = "test1@example.com"
+        self.assertEqual(self.user.email, "test1@example.com")
+
+    def test_random_email_2(self):
+        """Comment"""
+        self.user.email = "random2@test.org"
+        self.assertEqual(self.user.email, "random2@test.org")
+
+    def test_random_first_name_1(self):
+        """Comment"""
+        self.user.first_name = "John"
+        self.assertEqual(self.user.first_name, "John")
+
+    def test_random_first_name_2(self):
+        """Comment"""
+        self.user.first_name = "Jane"
+        self.assertEqual(self.user.first_name, "Jane")
+
+    def test_random_last_name_1(self):
+        """Comment"""
+        self.user.last_name = "Doe"
+        self.assertEqual(self.user.last_name, "Doe")
+
+    def test_random_last_name_2(self):
+        """Comment"""
+        self.user.last_name = "Smith"
+        self.assertEqual(self.user.last_name, "Smith")
+
+    def test_random_id_1(self):
+        """Comment"""
+        self.user.id = str(uuid.uuid4())
+        self.assertIsInstance(self.user.id, str)
+
+    def test_random_id_2(self):
+        """Comment"""
+        new_id = str(uuid.uuid4())
+        self.user.id = new_id
+        self.assertEqual(self.user.id, new_id)
