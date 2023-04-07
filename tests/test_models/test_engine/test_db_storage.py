@@ -106,8 +106,6 @@ class TestDBStorageGet(unittest.TestCase):
         self.storage.reload()
         self.new_state = State(name="California")
         self.new_state.save()
-        self.new_city = City(name="San Francisco", state_id=self.new_state.id)
-        self.new_city.save()
 
     def tearDown(self):
         """Tear down after the tests"""
