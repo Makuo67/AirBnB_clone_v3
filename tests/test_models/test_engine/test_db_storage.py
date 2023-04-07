@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-Contains the TestDBStorage classes
+Contains the TestDBStorageDocs and TestDBStorage classes
 """
 import random
 import uuid
@@ -106,18 +106,21 @@ class TestDBStorageGet(unittest.TestCase):
         self.storage.reload()
         self.new_state = State(name="California")
         self.new_state.save()
+        self.new_city = City(name="San Francisco", state_id=self.new_state.id)
+        self.new_city.save()
 
     def tearDown(self):
         """Tear down after the tests"""
 
+        self.storage.delete(self.new_city)
         self.storage.delete(self.new_state)
         self.storage.save()
         self.storage.close()
 
     def test_get_existing_object(self):
         """Test get() with an object that exists"""
-        obj = self.storage.get(State, self.new_state.id)
-        self.assertEqual(obj.id, self.new_state.id)
+        obj = self.storage.get(City, self.new_city.id)
+        self.assertEqual(obj.id, self.new_city.id)
 
     def test_get_nonexistent_object(self):
         """Test get() with an object that does not exist"""
@@ -393,6 +396,8 @@ class TestDBStorageCountUser(unittest.TestCase):
         """Test count() with a nonexistent class argument for User class"""
         count = self.storage.count(Amenity)
         self.assertEqual(count, 0)
+
+
 class TestAmenity(TestBaseModel):
     """ Test for amenity"""
 
